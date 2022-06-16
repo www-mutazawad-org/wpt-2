@@ -60,7 +60,7 @@ def update_expectations(_, **kwargs):
     metadata.update_expected(kwargs["test_paths"],
                              kwargs["run_log"],
                              update_properties=update_properties,
-                             full_update=False,
+                             full_update=kwargs["full"],
                              disable_intermittent=kwargs["update_intermittent"],
                              update_intermittent=kwargs["update_intermittent"],
                              remove_intermittent=kwargs["update_intermittent"])

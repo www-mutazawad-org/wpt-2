@@ -3,6 +3,7 @@
 <link rel="help" href="https://drafts.csswg.org/css-contain-3/#size-container">
 <script src="/resources/testharness.js"></script>
 <script src="/resources/testharnessreport.js"></script>
+<script src="support/cq-testcommon.js"></script>
 <style>
   iframe {
     width: 200px;
@@ -16,7 +17,7 @@
       height: 20px;
     }
     div#child { color: red; }
-    @container size(min-width: 300px) {
+    @container (min-width: 300px) {
       div#child { color: green; }
     }
   </style>
@@ -25,6 +26,7 @@
   </div>
 "></iframe>
 <script>
+  setup(() => assert_implements_container_queries());
 
   function waitForLoad(w) {
     return new Promise(resolve => w.addEventListener('load', resolve));

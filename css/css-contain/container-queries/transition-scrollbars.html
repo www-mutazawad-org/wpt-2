@@ -4,6 +4,7 @@
 <link rel="help" href="https://drafts.csswg.org/css-contain-3/#animated-containers">
 <script src="/resources/testharness.js"></script>
 <script src="/resources/testharnessreport.js"></script>
+<script src="support/cq-testcommon.js"></script>
 <style>
   #scrollable {
     overflow: auto;
@@ -18,14 +19,14 @@
   }
 
   /* Matches with or without a scrollbar: */
-  @container size(max-width: 100px) {
+  @container (max-width: 100px) {
     #target {
       background-color: blue;
     }
   }
 
   /* Matches only when there's a scrollbar: */
-  @container size(max-width: 99px) {
+  @container (max-width: 99px) {
     #target {
       background-color: green;
       font-size: 10px;
@@ -45,6 +46,8 @@
   </div>
 </div>
 <script>
+  setup(() => assert_implements_container_queries());
+
   test(() => {
     // Whether or not a scrollbar appeared is out of scope for this test.
     // The only thing we care about is that no transition was triggered.

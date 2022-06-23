@@ -3,6 +3,7 @@
 <link rel="help" href="https://drafts.csswg.org/css-contain-3/#animated-containers">
 <script src="/resources/testharness.js"></script>
 <script src="/resources/testharnessreport.js"></script>
+<script src="support/cq-testcommon.js"></script>
 <style>
   @keyframes anim {
     from { width: 200px; }
@@ -20,19 +21,19 @@
     width: 100px;
   }
 
-  @container size(min-width: 250px) {
+  @container (min-width: 250px) {
     #intermediate {
       container-type: inline-size;
     }
   }
 
-  @container size(width: 200px) {
+  @container (width: 200px) {
     #target {
       background-color: blue;
     }
   }
 
-  @container size(width: 100px) {
+  @container (width: 100px) {
     /* Initially queries  #container, but later queries #intermediate, when
        the other container query starts matching. */
     #target {
@@ -48,6 +49,8 @@
   </div>
 </div>
 <script>
+  setup(() => assert_implements_container_queries());
+
   test(() => {
     assert_equals(getComputedStyle(target).backgroundColor, 'rgb(0, 0, 255)');
 

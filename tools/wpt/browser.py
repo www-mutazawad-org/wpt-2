@@ -1557,7 +1557,9 @@ class Safari(Browser):
                 )
 
             source_path = os.path.join(mountpoint, pkgs[0])
-            dest_path = os.path.join(dest, rename if rename is not None else pkgs[0])
+            dest_path = os.path.join(
+                dest, (rename + get_ext(pkgs[0])) if rename is not None else pkgs[0]
+            )
 
             self.logger.debug(f"Copying {source_path} to {dest_path}")
             shutil.copy2(

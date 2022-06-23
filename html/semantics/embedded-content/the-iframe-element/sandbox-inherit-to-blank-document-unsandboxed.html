@@ -38,21 +38,27 @@ test(test => {
   assert_equals(window.origin, 'null');
 }, "Document is sandboxed via its CSP.");
 
-test(test => {
+promise_test(async test => {
     // The navigation will be canceled (204 no content). As a result, the
     // document in the popup must still be the initial empty document.
-    const w = window.open("/common/blank.html?pipe=status(204)")
+    const w = window.open("/common/blank.html?pipe=status(204)");
+
+    // Test after a 500ms timeout, as the above might not immediately throw.
+    await new Promise(r => setTimeout(r, 500) );
 
     // The about:blank document is sandboxed, because it inherited CSP from its
     // opener. However this is impossible to verify. There are cross-origin
     // access restrictions and an about:blank document can't do much on its own.
     assert_throws_dom("SecurityError", () => { w.origin });
-
 }, "The initial empty document inherit sandbox via CSP.");
 
 // Regression test for https://crbug.com/1190065
-test(test => {
+
+promise_test(async test => {
     const w = window.open("about:blank");
+
+    // Test after a 500ms timeout, as the above might not immediately throw.
+    await new Promise(r => setTimeout(r, 500) );
 
     // The about:blank document is sandboxed, because it inherited CSP from its
     // opener. However this is impossible to verify. There are cross-origin

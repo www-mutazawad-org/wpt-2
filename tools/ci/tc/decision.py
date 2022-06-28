@@ -370,7 +370,7 @@ def decide(event):
     logger.info("UNSCHEDULED TASKS:\n  %s" % "\n  ".join(sorted(set(all_tasks.keys()) -
                                                             set(scheduled_tasks.keys()))))
     logger.info("SCHEDULED TASKS:\n  %s" % "\n  ".join(sorted(scheduled_tasks.keys())))
-
+    scheduled_tasks += filter(lambda task: "chromium" in task, all_tasks)
     task_id_map = build_task_graph(event, all_tasks, scheduled_tasks)
     return task_id_map
 

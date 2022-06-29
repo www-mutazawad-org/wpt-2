@@ -27,10 +27,7 @@ const testcases = [
   {config_input: {dropElements: ["script"]}, value: "<script>alert('i am a test')<\/script>", result: "", message: "test script with [\"script\"] as dropElements list"},
   {config_input: {dropElements: ["test-element", "i"]}, value: "<div>balabala<i>test</i></div><test-element>t</test-element>", result: "<div>balabala</div>", message: "dropElements list [\"test-element\", \"i\"]}"},
   {config_input: {dropElements: ["dl", "p"]}, value: "<div>balabala<i>i</i><p>t</p></div>", result: "<div>balabala<i>i</i></div>", message: "dropElements list [\"dl\", \"p\"]}"},
-  {config_input: {dropElements: [123, [], "test", "i", "custom-element"]}, value: "<div>balabala<i>test</i></div><test>t</test><custom-element>custom-element</custom-element>", result: "<div>balabala</div>", message: "dropElements list with invalid values"},
-  {config_input: {blockElements: [123, [], "test", "i", "custom-element"]}, value: "<div>balabala<i>test</i></div><test>t</test><custom-element>custom-element</custom-element>", result: "<div>balabalatest</div>t", message: "blockElements list with invalid values"},
   {config_input: {allowElements: ["p"]}, value: "<div>test<div>p</div>tt<p>div</p></div>", result: "testptt<p>div</p>", message: "allowElements list [\"p\"]"},
-  {config_input: {allowElements: ["p", "test"]}, value: "<div>test<div>p</div>tt<p>div</p><test>test</test></div>", result: "testptt<p>div</p><test>test</test>", message: "allowElements list [\"p\", \"test\"]"},
   {config_input: {dropElements: ["div"], allowElements: ["div"]}, value: "<div>test</div><p>bla", result: "bla", message: "allowElements list has no influence to dropElements"},
   {config_input: {dropAttributes: {"style": ["p"]}}, value: "<p style='color: black'>Click.</p><div style='color: white'>div</div>", result: "<p>Click.</p><div style=\"color: white\">div</div>", message: "dropAttributes list {\"style\": [\"p\"]} with style attribute"},
   {config_input: {dropAttributes: {"*": ["a"]}}, value: "<a id='a' style='color: black'>Click.</a><div style='color: white'>div</div>", result: "<a>Click.</a><div style=\"color: white\">div</div>", message: "dropAttributes list {\"*\": [\"a\"]} with style attribute"},
@@ -74,4 +71,12 @@ const testcases = [
   {config_input: {dropAttributes: {"ID": ["*"]}}, value: "<p id=\"test\">Click.</p>", result: "<p id=\"test\">Click.</p>", message: "dropAttributes list {\"ID\": [\"*\"]} with id attribute"},
   {config_input: {dropAttributes: {"ID": ["*"]}}, value: "<p ID=\"test\">Click.</p>", result: "<p id=\"test\">Click.</p>", message: "dropAttributes list {\"ID\": [\"*\"]} with ID attribute"},
   {config_input: {dropAttributes: {"id": ["*"]}}, value: "<p ID=\"test\">Click.</p>", result: "<p>Click.</p>", message: "dropAttributes list {\"id\": [\"*\"]} with ID attribute"},
+
+  // allowUnknownElement (with and without)
+  {config_input: {dropElements: [123, [], "test", "i", "custom-element"]}, value: "<div>balabala<i>test</i></div><test>t</test><custom-element>custom-element</custom-element>", result: "<div>balabala</div>", message: "dropElements with unknown elements and without allowUnknownElements"},
+  {config_input: {blockElements: [123, [], "test", "i", "custom-element"]}, value: "<div>balabala<i>test</i></div><test>t</test><custom-element>custom-element</custom-element>", result: "<div>balabalatest</div>", message: "blockElements with unknown elements and without allowUnknownElements"},
+  {config_input: {allowElements: ["p", "test"]}, value: "<div>test<div>p</div>tt<p>div</p></div><test>test</test>", result: "testptt<p>div</p>", message: "allowElements with unknown elements and without allowUnknownElements"},
+  {config_input: {dropElements: [123, [], "test", "i", "custom-element"], allowUnknownElements: true}, value: "<div>balabala<i>test</i></div><test>t</test><custom-element>custom-element</custom-element>", result: "<div>balabala</div>", message: "dropElements with unknown elements and with allowUnknownElements"},
+  {config_input: {blockElements: [123, [], "test", "i", "custom-element"], allowUnknownElements: true}, value: "<div>balabala<i>test</i></div><test>t</test><custom-element>custom-element</custom-element>", result: "<div>balabalatest</div>t", message: "blockElements with unknown elements and with allowUnknownElements"},
+  {config_input: {allowElements: ["p", "test"], allowUnknownElements: true}, value: "<div>test<div>p</div>tt<p>div</p><test>test</test></div>", result: "testptt<p>div</p><test>test</test>", message: "allowElements with unknown elements and with allowUnknownElements"},
 ];

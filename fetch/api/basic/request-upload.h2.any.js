@@ -59,6 +59,7 @@ promise_test(async (test) => {
   const request = new Request('', {
     body: new ReadableStream(),
     method: 'POST',
+    duplex,
   });
 
   assert_equals(request.headers.get('Content-Type'), null, `Request should not have a content-type set`);
@@ -66,6 +67,7 @@ promise_test(async (test) => {
   const response = await fetch('data:a/a;charset=utf-8,test', {
     method: 'POST',
     body: new ReadableStream(),
+    duplex,
   });
 
   assert_equals(await response.text(), 'test', `Response has correct body`);
@@ -75,6 +77,7 @@ promise_test(async (test) => {
   const request = new Request('data:a/a;charset=utf-8,test', {
     body: new ReadableStream(),
     method: 'POST',
+    duplex,
  });
 
   assert_equals(request.headers.get('Content-Type'), null, `Request should not have a content-type set`);
